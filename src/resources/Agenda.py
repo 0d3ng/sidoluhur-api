@@ -9,15 +9,12 @@ from dao.AgendaDao import AgendaDao
 from flask_jsonpify import jsonify
 import logging
 
-class Agendas(Resource):
+class Agenda(Resource):
     
-    logger = logging.getLogger('Agendas')
+    logger = logging.getLogger('Agenda')
     
     def get(self):
         agendaDao = AgendaDao()
         result = agendaDao.GetAllAgenda()
-        agendas = []
-        for row in result:
-            agendas.append(row)
-        return jsonify(agendas)
+        return jsonify({'agendas':result})
     

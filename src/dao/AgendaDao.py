@@ -6,7 +6,7 @@ Created on May 5, 2018
 
 from util.Database import Database
 import logging
-import json
+import pprint
 
 logger = logging.getLogger('AgendaDao')
 
@@ -33,7 +33,4 @@ class AgendaDao(Database):
 if __name__ == '__main__':
     agendaDao = AgendaDao()
     result = agendaDao.GetAllAgenda()
-    listAgendas = []
-    for row in result:
-        listAgendas.append(row)
-    print(json.dumps(listAgendas))
+    print(result)
