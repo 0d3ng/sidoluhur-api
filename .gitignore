@@ -6,3 +6,4 @@ bin/
 .project
 .pydevproject
 .settings/
+log/

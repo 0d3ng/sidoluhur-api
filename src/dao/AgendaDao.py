@@ -6,6 +6,9 @@ Created on May 5, 2018
 
 from util.Database import Database
 import logging
+import json
+
+logger = logging.getLogger('AgendaDao')
 
 class AgendaDao(Database):
     '''
@@ -24,10 +27,13 @@ class AgendaDao(Database):
         @return: List of agenda
         '''
         query = "SELECT id_agenda,username,tema,tema_seo,isi_agenda,tempat,pengirim,tgl_mulai,tgl_selesai,tgl_posting,jam,gambar FROM agenda"
-        logging.debug(query)
+        logger.info(query)
         return self.SelectAll(query)
     
 if __name__ == '__main__':
     agendaDao = AgendaDao()
     result = agendaDao.GetAllAgenda()
-    print(result)
+    listAgendas = []
+    for row in result:
+        listAgendas.append(row)
+    print(json.dumps(listAgendas))

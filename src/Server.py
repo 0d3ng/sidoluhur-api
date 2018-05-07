@@ -6,14 +6,14 @@ Created on May 6, 2018
 
 from flask import Flask
 from flask_restful import Api
-from dao.AgendaDao import AgendaDao
-from dao.ArtikelDao import ArtikelDao
+from resources.Agendas import Agendas
+from util.LogUtil import LogUtil
 
 app = Flask(__name__)
 api = Api(app)
 
-api.add_resource(AgendaDao,'/Agendas')
-api.add_resource(ArtikelDao,'/Articles')
+api.add_resource(Agendas,'/Agendas')
 
 if __name__ == '__main__':
-    app.run(port=5002)
+    LogUtil.setup_logging()
+    app.run(port=5002,debug='on')
