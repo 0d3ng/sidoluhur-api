@@ -6,9 +6,8 @@ Created on May 5, 2018
 
 from util.Database import Database
 import logging
-import pprint
 
-logger = logging.getLogger('AgendaDao')
+logger = logging.getLogger(__name__)
 
 class AgendaDao(Database):
     '''
@@ -26,9 +25,12 @@ class AgendaDao(Database):
         Get all agenda
         @return: List of agenda
         '''
-        query = "SELECT id_agenda,username,tema,tema_seo,isi_agenda,tempat,pengirim,tgl_mulai,tgl_selesai,tgl_posting,jam,gambar FROM agenda"
+        query = "SELECT id_agenda,username,tema,tema_seo,isi_agenda,tempat,pengirim,DATE_FORMAT(tgl_mulai,'%Y-%m-%d') AS tgl_mulai,DATE_FORMAT(tgl_selesai,'%Y-%m-%d') AS tgl_selesai,DATE_FORMAT(tgl_posting,'%Y-%m-%d') AS tgl_posting,jam,gambar FROM agenda"
         logger.info(query)
-        return self.SelectAll(query)
+        try:
+            return self.SelectAll(query)
+        except Exception as e:
+            raise e
     
 if __name__ == '__main__':
     agendaDao = AgendaDao()

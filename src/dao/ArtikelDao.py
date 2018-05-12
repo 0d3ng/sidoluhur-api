@@ -6,7 +6,7 @@ Created on May 5, 2018
 from util.Database import Database
 import logging
 
-logger = logging.getLogger('AgendaDao')
+logger = logging.getLogger(__name__)
 
 
 class ArtikelDao(Database):
@@ -25,9 +25,13 @@ class ArtikelDao(Database):
         Get all agenda
         @return: List of agenda
         '''
-        query = "SELECT id_artikel,username,judul_artikel,artikel_seo,isi_artikel,gambar,publish,hari,tanggal,jam,dibaca,tag_seo,buletin FROM artikel"
+        query = "SELECT id_artikel,username,judul_artikel,artikel_seo,isi_artikel,gambar,publish,hari,DATE_FORMAT(tanggal,'%Y-%m-%d') AS tanggal,DATE_FORMAT(jam,'%H:%m:%s') AS jam,dibaca,tag_seo,buletin FROM artikel"
         logger.info(query)
-        return self.SelectAll(query)
+        try:
+            return self.SelectAll(query)
+        except Exception as e:
+            raise e
+        
     
 if __name__ == '__main__':
     artikeDao = ArtikelDao()

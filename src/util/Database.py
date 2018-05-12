@@ -11,7 +11,7 @@ class Database:
     class database to handling connection
     '''
 
-    logger = logging.getLogger('Database')
+    logger = logging.getLogger(__name__)
 
     __host = '127.0.0.1'
     __user = 'root'
@@ -30,7 +30,7 @@ class Database:
                 self.__cursor = self.__connection.cursor();
                 self.logger.info('Connection success')
         except Exception as e:
-            self.logger.error(e)
+            raise e
     
     def __del__(self):
         try:
@@ -40,7 +40,7 @@ class Database:
             else:
                 self.__connection.close()
         except Exception as e:
-            self.logger.error(e)   
+            raise e 
 
     def __commit(self):
         '''
@@ -50,7 +50,7 @@ class Database:
             self.__connection.commit()
             return True
         except Exception as e:
-            self.logger.error(e)
+            raise e
         return False
 
     def roolback(self):
@@ -61,7 +61,7 @@ class Database:
             self.__connection.rollback()
             return True
         except Exception as e:
-            self.logger.error(e)
+            raise e
         return False            
 
     def setAutoCommit(self, autoCommit):
@@ -74,7 +74,7 @@ class Database:
             self.__connection.autocommit(autoCommit)
             return True
         except Exception as e:
-            self.logger.error(e)
+            raise e
         return False
             
     def execute(self, query):
@@ -87,7 +87,7 @@ class Database:
             self.__cursor.execute(query)
             return True
         except Exception as e:
-            self.logger.error(e)   
+            raise e 
         return False
         
     def executeParams(self, query, params):
@@ -102,7 +102,7 @@ class Database:
             self.__commit()
             return True
         except Exception as e:
-            self.logger.error(e)   
+            raise e   
         return False 
         
     def SelectParams(self, query,param):
@@ -117,7 +117,7 @@ class Database:
             result = self.__cursor.fetchall()
             return result
         except Exception as e:
-            self.logger.error(e)   
+            raise e   
         return None
         
     def SelectAll(self, query):
@@ -131,7 +131,7 @@ class Database:
             result = self.__cursor.fetchall()
             return result
         except Exception as e:
-            self.logger.error(e)   
+            raise e  
         return None
         
     def SelectOne(self, query,param):
@@ -146,7 +146,7 @@ class Database:
             result = self.__cursor.fetchone()
             return result
         except Exception as e:
-            self.logger.error(e)   
+            raise e  
         return None
         
 if __name__ == '__main__':
