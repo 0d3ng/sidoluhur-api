@@ -32,6 +32,29 @@ class ArtikelDao(Database):
         except Exception as e:
             raise e
         
+    def GetArtikelById(self,id_artikel):
+        '''
+        Get agenda by id
+        @return: object of agenda
+        '''
+        query = "SELECT id_artikel,username,judul_artikel,artikel_seo,isi_artikel,gambar,publish,hari,DATE_FORMAT(tanggal,'%%Y-%%m-%%d') AS tanggal,DATE_FORMAT(jam,'%%H:%%m:%%s') AS jam,dibaca,tag_seo,buletin FROM artikel WHERE id_artikel=%s"
+        logger.info(query)
+        try:
+            return self.SelectOne(query, id_artikel)
+        except Exception as e:
+            raise e
+     
+    def GetArtikelPopular(self):
+        '''
+        Get all agenda
+        @return: List of agenda
+        '''
+        query = "SELECT id_artikel,username,judul_artikel,artikel_seo,isi_artikel,gambar,publish,hari,DATE_FORMAT(tanggal,'%Y-%m-%d') AS tanggal,DATE_FORMAT(jam,'%H:%m:%s') AS jam,dibaca,tag_seo,buletin FROM artikel ORDER BY dibaca DESC"
+        logger.info(query)
+        try:
+            return self.SelectAll(query)
+        except Exception as e:
+            raise e   
     
 if __name__ == '__main__':
     artikeDao = ArtikelDao()

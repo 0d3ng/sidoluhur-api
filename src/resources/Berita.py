@@ -27,6 +27,10 @@ class Berita(Resource):
                 logger.info(id_berita)
                 result = beritaDao.GetBeritaById(id_berita)
                 logger.info(result)
+            elif 'id_kategori' in request.args:
+                id_kategori = int(request.args['id_kategori'])
+                logger.info(id_kategori)
+                result = beritaDao.GetBeritaByKategori(id_kategori)
             elif 'limit' in request.args:
                 limit = int(request.args['limit'])
                 logger.info(limit)

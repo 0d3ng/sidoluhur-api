@@ -35,7 +35,7 @@ class BeritaDao(Database):
     def GetBeritaById(self,id_berita):
         '''
         Get all news
-        @return: List of news
+        @return: List of news by id
         '''
         query = '''SELECT b.id_berita,b.id_kategori,b.username,b.judul,b.judul_seo,b.headline,b.isi_berita,b.gambar,b.nama_lengkap,b.publish,b.hari,DATE_FORMAT(b.tanggal,'%%Y-%%m-%%d') AS tanggal,DATE_FORMAT(b.jam,'%%H:%%m:%%s') AS jam,b.dibaca,b.tag FROM berita b WHERE b.id_berita=%s '''
         logger.info(query)
@@ -43,6 +43,18 @@ class BeritaDao(Database):
             return self.SelectOne(query, id_berita)
         except Exception as e:
             raise e
+        
+    def GetBeritaByKategori(self,id_kategori):
+        '''
+        Get all news
+        @return: List of news by category
+        '''
+        query = '''SELECT b.id_berita,b.id_kategori,b.username,b.judul,b.judul_seo,b.headline,b.isi_berita,b.gambar,b.nama_lengkap,b.publish,b.hari,DATE_FORMAT(b.tanggal,'%%Y-%%m-%%d') AS tanggal,DATE_FORMAT(b.jam,'%%H:%%m:%%s') AS jam,b.dibaca,b.tag FROM berita b WHERE b.id_kategori=%s '''
+        logger.info(query)
+        try:
+            return self.SelectParams(query, id_kategori)
+        except Exception as e:
+            raise e    
         
     def GetBeritaLimit(self,limit):
         '''
