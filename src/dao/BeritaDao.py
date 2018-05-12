@@ -37,8 +37,7 @@ class BeritaDao(Database):
         Get all news
         @return: List of news
         '''
-        query = """SELECT b.id_berita,b.id_kategori,b.username,b.judul,b.judul_seo,b.headline,b.isi_berita,b.gambar,b.nama_lengkap,b.publish,b.hari,DATE_FORMAT(b.tanggal,'%Y-%m-%d') AS tanggal,DATE_FORMAT(b.jam,'%H:%m:%s') AS jam,b.dibaca,b.tag FROM berita b 
-        WHERE b.id_berita=%s"""
+        query = '''SELECT b.id_berita,b.id_kategori,b.username,b.judul,b.judul_seo,b.headline,b.isi_berita,b.gambar,b.nama_lengkap,b.publish,b.hari,DATE_FORMAT(b.tanggal,'%%Y-%%m-%%d') AS tanggal,DATE_FORMAT(b.jam,'%%H:%%m:%%s') AS jam,b.dibaca,b.tag FROM berita b WHERE b.id_berita=%s '''
         logger.info(query)
         try:
             return self.SelectOne(query, id_berita)
@@ -50,10 +49,21 @@ class BeritaDao(Database):
         Get all news
         @return: List of news
         '''
-        query = '''SELECT b.id_berita,b.id_kategori,b.username,b.judul,b.judul_seo,b.headline,b.isi_berita,b.gambar,b.nama_lengkap,b.publish,b.hari,DATE_FORMAT(b.tanggal,'%Y-%m-%d') AS tanggal,DATE_FORMAT(b.jam,'%H:%m:%s') AS jam,b.dibaca,b.tag FROM berita b 
-        ORDER BY b.id_berita DESC LIMIT %s'''
+        query = '''SELECT b.id_berita,b.id_kategori,b.username,b.judul,b.judul_seo,b.headline,b.isi_berita,b.gambar,b.nama_lengkap,b.publish,b.hari,DATE_FORMAT(b.tanggal,'%%Y-%%m-%%d') AS tanggal,DATE_FORMAT(b.jam,'%%H:%%m:%%s') AS jam,b.dibaca,b.tag FROM berita b ORDER BY b.id_berita DESC LIMIT %s'''
         logger.info(query)
         try:
             return self.SelectParams(query, limit)
+        except Exception as e:
+            raise e
+        
+    def GetBeritaPopular(self):
+        '''
+        Get popular news limit 5, most read
+        @return: List of news
+        '''
+        query = '''SELECT b.id_berita,b.id_kategori,b.username,b.judul,b.judul_seo,b.headline,b.isi_berita,b.gambar,b.nama_lengkap,b.publish,b.hari,DATE_FORMAT(b.tanggal,'%%Y-%%m-%%d') AS tanggal,DATE_FORMAT(b.jam,'%%H:%%m:%%s') AS jam,b.dibaca,b.tag FROM berita b ORDER BY b.dibaca DESC LIMIT 5'''
+        logger.info(query)
+        try:
+            return self.SelectAll(query)
         except Exception as e:
             raise e

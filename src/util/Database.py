@@ -143,6 +143,8 @@ class Database:
         '''
         try:
             self.__cursor.execute(query,param)
+            self.logger.info(query)
+            self.logger.info(param)
             result = self.__cursor.fetchone()
             return result
         except Exception as e:
